@@ -1,0 +1,51 @@
+﻿   @model Owasp.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if (Model.Users != null && Model.Users.Count() > 0)
+    {
+        <h1 class="display-4">Welcome @Model.Users.First().Username</h1>
+    }
+    else
+    {
+        <h1 class="display-4">No users available</h1>
+    }
+</div>
+
+
+<h2> Mis Pedidos </h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Estatus</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Order != null && Model.Order.Count > 0){
+            @foreach ( Order orden in Model.Order )
+            {
+                <tr onclick="redirectToOrderDetail('@orden.OrderID')">
+                    <td>@orden.OrderID</td>
+                    <td>@orden.Username</td>
+                    <td>@orden.OrderDate</td>
+                    <td>@orden.Status</td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+<script>
+    function redirectToOrderDetail(orderId) {
+        // Redirige a la acción "OrdenDetail" del "OrderController" con el OrderID como parámetro
+        window.location.href = '/Order/OrdenDetail/' + orderId;
+    }
+</script>
